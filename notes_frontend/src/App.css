@@ -1,104 +1,208 @@
-/* CSS Variables for Theme Management */
+/* CSS Variables for Theme Management (styled to match style guide) */
 :root {
-  /* Light theme colors */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --text-primary: #282c34;
-  --text-secondary: #61dafb;
-  --border-color: #e9ecef;
-  --button-bg: #007bff;
+  /* Light theme from style guide */
+  --color-primary: #3b82f6;
+  --color-accent: #06b6d4;
+  --color-secondary: #64748b;
+  --color-error: #EF4444;
+
+  --bg-primary: #f9fafb;     /* background */
+  --bg-surface: #ffffff;     /* cards/surface */
+  --text-primary: #111827;   /* text */
+  --text-muted: #6b7280;
+  --border-color: #e5e7eb;
+  --ring: 0 0 0 3px rgba(59, 130, 246, .25);
+
+  --radius: 12px;
+
+  --button-bg: var(--color-primary);
   --button-text: #ffffff;
 }
 
 [data-theme="dark"] {
-  /* Dark theme colors */
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #282c34;
-  --text-primary: #ffffff;
-  --text-secondary: #61dafb;
-  --border-color: #404040;
-  --button-bg: #0056b3;
-  --button-text: #ffffff;
+  /* Optional dark palette */
+  --bg-primary: #0b1220;
+  --bg-surface: #0f172a;
+  --text-primary: #e5e7eb;
+  --text-muted: #94a3b8;
+  --border-color: #1f2937;
+
+  --button-bg: #2563eb;
+  --button-text: #e5e7eb;
 }
+
+* { box-sizing: border-box; }
+
+html, body, #root { height: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica Neue, Arial, "Apple Color Emoji","Segoe UI Emoji";
+}
+
+a { color: var(--color-primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
 
 .App {
-  text-align: center;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
   min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: var(--bg-secondary);
+/* Layout: sidebar + main content */
+.layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 0;
   min-height: 100vh;
+}
+
+.sidebar {
+  background: var(--bg-surface);
+  border-right: 1px solid var(--border-color);
+  padding: 16px;
+}
+
+.main {
+  padding: 24px;
+}
+
+/* Header bar */
+.header {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease;
-  position: relative;
+  justify-content: space-between;
+  margin-bottom: 16px;
 }
 
-.App-link {
-  color: var(--text-secondary);
-  transition: color 0.3s ease;
+.title {
+  font-size: 18px;
+  font-weight: 700;
 }
 
-.theme-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: var(--button-bg);
+/* Buttons */
+.btn {
+  background: var(--button-bg);
   color: var(--button-text);
   border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 14px;
+  border-radius: 10px;
+  padding: 10px 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 2px rgba(0,0,0,.08);
+  transition: transform .06s ease, box-shadow .2s ease, opacity .2s ease;
+}
+.btn:hover { transform: translateY(-1px); box-shadow: 0 6px 14px rgba(59,130,246,.25); }
+.btn:active { transform: translateY(0); }
+
+.btn.secondary {
+  background: transparent;
+  color: var(--color-primary);
+  border: 1px solid var(--border-color);
 }
 
-.theme-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  opacity: 0.9;
+.btn.danger {
+  background: var(--color-error);
 }
 
-.theme-toggle:active {
-  transform: translateY(0);
+/* Theme toggle */
+.theme-toggle {
+  background: linear-gradient(135deg, rgba(59,130,246,.12), rgba(6,182,212,.12));
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 13px;
+  cursor: pointer;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Note list */
+.note-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow: auto;
+  height: calc(100vh - 96px);
+  padding-right: 4px;
 }
 
-/* Responsive design for mobile */
-@media (max-width: 768px) {
-  .theme-toggle {
-    top: 10px;
-    right: 10px;
-    padding: 8px 16px;
-    font-size: 12px;
-  }
+.note-item {
+  display: flex;
+  align-items: start;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-surface);
+  cursor: pointer;
+  transition: background .15s ease, border-color .15s ease, transform .06s ease;
+}
+.note-item:hover { border-color: #c7d2fe; background: linear-gradient(0deg, rgba(59,130,246,.06), rgba(59,130,246,.06)), var(--bg-surface); }
+.note-item.active { border-color: var(--color-primary); box-shadow: inset 0 0 0 1px rgba(59,130,246,.35); }
+
+.note-item .title {
+  font-size: 15px;
+}
+.note-item .snippet {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* Cards */
+.card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: 0 1px 2px rgba(0,0,0,.04);
+}
+
+/* Form */
+.form {
+  display: grid;
+  gap: 12px;
+}
+.form label {
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+.input, .textarea {
+  width: 100%;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  outline: none;
+}
+.textarea { min-height: 180px; resize: vertical; }
+.input:focus, .textarea:focus { box-shadow: var(--ring); border-color: #bfdbfe; }
+
+.toolbar {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+/* Modal */
+.modal-backdrop {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.45);
+  display: flex; align-items: center; justify-content: center;
+  padding: 16px;
+}
+.modal {
+  width: 100%;
+  max-width: 420px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.25);
+}
+
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; }
+  .sidebar { border-right: none; border-bottom: 1px solid var(--border-color); }
 }
