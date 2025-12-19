@@ -4,7 +4,8 @@ Modern, lightweight React UI for a simple notes app. It consumes the Notes Backe
 
 ## Features
 - Sidebar list + main detail layout
-- Create, edit, delete notes
+- Client-side routing (React Router v6)
+- Create, edit, delete notes (API wiring added in later step)
 - Light theme with #3b82f6 primary and #06b6d4 accents
 - Environment-configurable backend base URL
 
@@ -14,6 +15,13 @@ Modern, lightweight React UI for a simple notes app. It consumes the Notes Backe
    - `REACT_APP_NOTES_API_BASE_URL=http://localhost:3001`
    If not set, defaults to `http://localhost:3001`.
 3. Run: `npm start` then open http://localhost:3000
+
+### Routes
+- `/` -> redirects to `/notes`
+- `/notes` -> index view
+- `/notes/new` -> create note
+- `/notes/:noteId` -> note detail
+- `/notes/:noteId/edit` -> edit note
 
 ## Backend endpoints
 The app expects a REST API:
@@ -25,11 +33,12 @@ The app expects a REST API:
 ## Notes
 - Styles are in `src/App.css`
 - Components:
+  - `src/components/Header.js`
   - `src/components/NoteList.js`
   - `src/components/NoteDetail.js`
   - `src/components/NoteForm.js`
   - `src/components/DeleteModal.js`
-- API utility: `src/utils/api.js`
+- API utility: `src/utils/api.js` (not used in scaffolding; to be wired later)
 
 ## Scripts
 - `npm start` - dev server
